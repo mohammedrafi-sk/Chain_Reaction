@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1429462690 source:f:\project\chain_reaction\chain_reaction.cpp
+	<iostream>
+	<GL/glut.h>
+
+1429462692 source:f:\project\cs_project\140070019_231\source\chain_reaction.cpp
+	<iostream>
+	<GL/glut.h>
+
