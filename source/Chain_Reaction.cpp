@@ -11,6 +11,7 @@
 
 #include <iostream>
 #include <GL/glut.h>
+//#include <cstdint>
 
 using namespace std;
 //*******************************************************************************************************************************//
@@ -53,8 +54,8 @@ int player[4]= {0,0,0,0};
 //player[i] = 0 if i+1'th player is in the game
 //player[i] = 1 if i+1'th player is eliminated from the game.
 
-const int font_1=(int)GLUT_BITMAP_9_BY_15;
-const int font_2=(int)GLUT_BITMAP_TIMES_ROMAN_24;
+//const int font_1=(int)GLUT_BITMAP_9_BY_15;
+//const int font_2=(int)GLUT_BITMAP_TIMES_ROMAN_24;
 //fonts that are used to write text on the window.
 
 bool is_chance=false;
@@ -70,7 +71,9 @@ void display(void);
 void mainscrean(void);
 
 //Function that prints text on screan.
-void textf(float x, float y, void *font,const char *string);
+void textf(float x, float y, const char *string);
+
+void textf1(float x, float y, const char *string);
 
 //draws window for showing instructions to play game.
 void instructions(void);
@@ -145,7 +148,7 @@ void initialize()
     current_player=0;
     for(int i=0; i<8; i++)
     {
-        for(int j=0; j<6; j=j++)
+        for(int j=0; j<6; j++)
         {
             ball_count[i][j]=0;   //makes no. of balls in each cell to zero.
             ball_colour[i][j]=-1; //sets colour of ball in each cell to none as there are no balls in any cell.
@@ -283,19 +286,19 @@ void mainscrean(void)
     sphere_mainscreen(0.333,0.68,3,3);
 
     glColor3f(0.0,0.0,1.0);
-    textf(-0.265,+0.65,(void *)font_2,"CHAIN REACTION");
+    textf1(-0.265,+0.65,"CHAIN REACTION");
 
     glColor3d(0.0, 0.0, 0.0);
-    textf(-0.09,+0.3,(void *)font_1,"NEW GAME"); // prints the text given in the form of string
-    textf(-0.135,0,(void *)font_1,"INSTRUCTIONS");//with left bottom of the text at x,y inputs given to the function textf.
-    textf(-0.045,-0.3,(void *)font_1,"EXIT");
+    textf(-0.09,+0.3,"NEW GAME"); // prints the text given in the form of string
+    textf(-0.135,0,"INSTRUCTIONS");//with left bottom of the text at x,y inputs given to the function textf.
+    textf(-0.045,-0.3,"EXIT");
 
-    textf(-0.40,-0.5,(void *)font_1,"DEVELOPED BY-");
-    textf(-0.175,-0.60,(void *)font_1,"PUSHKARAJ DHAKE");
-    textf(-0.175,-0.68,(void *)font_1,"MOHAMMED RAFI");
-    textf(-0.175,-0.76,(void *)font_1,"GAURAV SINHA");
-    textf(-0.175,-0.84,(void *)font_1,"MADDELA SAI KARTHIK");
-    textf(-0.67,-1.0,(void *)font_2,"CREDITS TO OUR TA Ms.MAHIMA CHOUDHARY");
+    textf(-0.40,-0.5,"DEVELOPED BY-");
+    textf(-0.175,-0.60,"PUSHKARAJ DHAKE");
+    textf(-0.175,-0.68,"MOHAMMED RAFI");
+    textf(-0.175,-0.76,"GAURAV SINHA");
+    textf(-0.175,-0.84,"MADDELA SAI KARTHIK");
+    textf1(-0.67,-1.0,"CREDITS TO OUR TA Ms.MAHIMA CHOUDHARY");
 
     sphere_mainscreen(-0.21,-0.58,1,1);// places 1 sphere at the position given in terms of x,y coordinates.
     sphere_mainscreen(-0.21,-0.66,1,3);
@@ -306,13 +309,23 @@ void mainscrean(void)
 //*******************************************************************************************************************************//
 
 //Function that prints text on screan.
-void textf(float x, float y, void *font_1,const char *string)
+void textf(float x, float y, const char *string)
 {
     const char *c;
     glRasterPos2f(x, y);
     for (c=string; *c != '\0'; c++)
     {
-        glutBitmapCharacter(font_1, *c);//c is the pointer to character string.
+        glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *c);//c is the pointer to character string.
+    }
+}
+
+void textf1(float x, float y, const char *string)
+{
+    const char *c;
+    glRasterPos2f(x, y);
+    for (c=string; *c != '\0'; c++)
+    {
+        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *c);//c is the pointer to character string.
     }
 }
 
@@ -331,39 +344,39 @@ void instructions(void)
     glEnd();
 
     glColor3f(0.0,1.0,0.0);
-    textf(-0.25,+0.8,(void *)font_2,"INSTRUCTIONS");
+    textf1(-0.25,+0.8,"INSTRUCTIONS");
 
     glColor3d(1.0, 0.0, 0.0);
-    textf(-0.8,+0.6,(void *)font_1,"1.  WITH THE HELP OF MOUSE CLICK ON THE REQUIRED CELL PLAYER CAN PLACE  ");
-    textf(-0.8,0.52,(void *)font_1,"    BALL OF HIS COLOUR ON THE BOARD.");
+    textf(-0.8,+0.6,"1.  WITH THE HELP OF MOUSE CLICK ON THE REQUIRED CELL PLAYER CAN PLACE  ");
+    textf(-0.8,0.52,"    BALL OF HIS COLOUR ON THE BOARD.");
 
     glColor3d(0.0,0.0,1.0);
-    textf(-0.8,0.42,(void *)font_1,"2.  THE PLAYER CAN CLICK ONLY ON THE CELL CONTAINING SAME COLOUR BALL OR ");
-    textf(-0.8,0.34,(void *)font_1,"    ON AN EMPTY CELL WITH NO BALLS IN IT.");
+    textf(-0.8,0.42,"2.  THE PLAYER CAN CLICK ONLY ON THE CELL CONTAINING SAME COLOUR BALL OR ");
+    textf(-0.8,0.34,"    ON AN EMPTY CELL WITH NO BALLS IN IT.");
 
     glColor3d(1.0,1.0,0.0);
-    textf(-0.8,0.24,(void *)font_1,"3.  THERE IS A LIMIT ON THE MAXIMUM NUMBER OF BALLS THAT CAN BE CONTAINED ");
-    textf(-0.8,0.16,(void *)font_1,"    BY A CELL AND IF THE NUMBER OF BALLS IN A PARTICULAR CELL EXCEED THAT ");
-    textf(-0.8,0.08,(void *)font_1,"    LIMIT THEN EXPLOSION TAKES PLACE");
+    textf(-0.8,0.24,"3.  THERE IS A LIMIT ON THE MAXIMUM NUMBER OF BALLS THAT CAN BE CONTAINED ");
+    textf(-0.8,0.16,"    BY A CELL AND IF THE NUMBER OF BALLS IN A PARTICULAR CELL EXCEED THAT ");
+    textf(-0.8,0.08,"    LIMIT THEN EXPLOSION TAKES PLACE");
 
     glColor3d(0.0,1.0,1.0);
-    textf(-0.8,-0.02,(void *)font_1,"4.  WHILE EXPLODING IF ANOTHER PLAYER'S BALLL IS PRESENT IN THE ADJACENT ");
-    textf(-0.8,-0.10,(void *)font_1,"    CELL IT ALSO BECOMES THE COLOUR OF THE PLAYER WHO HAS DONE EXPLOSION.");
+    textf(-0.8,-0.02,"4.  WHILE EXPLODING IF ANOTHER PLAYER'S BALLL IS PRESENT IN THE ADJACENT ");
+    textf(-0.8,-0.10,"    CELL IT ALSO BECOMES THE COLOUR OF THE PLAYER WHO HAS DONE EXPLOSION.");
 
     glColor3d(0.0,1.0,0.0);
-    textf(-0.8,-0.20,(void *)font_1,"5.  WHILE EXPLODING IF ADJACENT CELL ALSO CONTAINS MAXIMUM NUMBER OF BALLS");
-    textf(-0.8,-0.28,(void *)font_1,"    THEN AFTER ADDITION OF BALL FROM EXPLODING CELL IT ALSO EXPLODES AND ");
-    textf(-0.8,-0.36,(void *)font_1,"    THIS CHAIN FURTHER CONTINUES.");
+    textf(-0.8,-0.20,"5.  WHILE EXPLODING IF ADJACENT CELL ALSO CONTAINS MAXIMUM NUMBER OF BALLS");
+    textf(-0.8,-0.28,"    THEN AFTER ADDITION OF BALL FROM EXPLODING CELL IT ALSO EXPLODES AND ");
+    textf(-0.8,-0.36,"    THIS CHAIN FURTHER CONTINUES.");
 
     glColor3d(1.0,0.0,1.0);
-    textf(-0.8,-0.46,(void *)font_1,"6.  IN THIS WAY THE PLAYER HAS TO ELIMINATE THE OPPONENTS'S BALLS AND HAS ");
-    textf(-0.8,-0.54,(void *)font_1,"    TO TAKE CONTROL OF THE BOARD.");
+    textf(-0.8,-0.46,"6.  IN THIS WAY THE PLAYER HAS TO ELIMINATE THE OPPONENTS'S BALLS AND HAS ");
+    textf(-0.8,-0.54,"    TO TAKE CONTROL OF THE BOARD.");
 
     glColor3d(1.0,1.0,0.0);
-    textf(-0.8,-0.62,(void *)font_1,"#   You can press 'ESC' key on keyboard anytime to exit the game.");
+    textf(-0.8,-0.62,"#   You can press 'ESC' key on keyboard anytime to exit the game.");
 
     glColor3d(1.0, 0.0, 0.0);
-    textf(-0.045,-0.8,(void *)font_1,"BACK");
+    textf(-0.045,-0.8,"BACK");
 
     glBegin(GL_LINE_STRIP);
     glColor3f(1.0,1.0,1.0);
@@ -425,12 +438,12 @@ void choose_players(void)
         glEnd();
     }
     glColor3d(1.0, 1.0, 0.0);
-    textf(-0.4125,+0.6,(void *)font_2,"CHOOSE NUMBER OF PLAYERS :");
+    textf1(-0.4125,+0.6,"CHOOSE NUMBER OF PLAYERS :");
 
     glColor3f(0.0,0.0,0.0);
-    textf(-0.03375,+0.3,(void *)font_1,"TWO");
-    textf(-0.05625,0,(void *)font_1,"THREE");
-    textf(-0.045,-0.3,(void *)font_1,"FOUR");
+    textf(-0.03375,+0.3,"TWO");
+    textf(-0.05625,0,"THREE");
+    textf(-0.045,-0.3,"FOUR");
     glBegin(GL_LINE_STRIP);
     glColor3f(1.0,1.0,1.0);
     glVertex2f(-0.2,-0.85);
@@ -448,7 +461,7 @@ void choose_players(void)
     glEnd();
 
     glColor3d(1.0, 0.0, 0.0);
-    textf(-0.045,-0.8,(void *)font_1,"BACK");
+    textf(-0.045,-0.8,"BACK");
 }
 
 //*******************************************************************************************************************************//
@@ -473,23 +486,24 @@ void draw_grid(void)
     glVertex2f(-0.4,-0.9625);
     glEnd();
     glColor3d(0.0, 0.0, 0.0);
-    textf(-0.36,-0.9125,(void *)font_1,"LEAVE THE GAME & GO TO MAIN MENU");
+    textf(-0.36,-0.9125,"LEAVE THE GAME & GO TO MAIN MENU");
 
     if (current_player==0) glColor3f(1.0,1.0,0.0);                                      //sets the colour of grid and text
     else glColor3f(int(current_player/4)%2, int(current_player/2)%2, current_player%2); //as the colour of whose turn it is.
 
-    textf(-0.18,+0.89,(void *)font_1,"PLAYER");
+    textf(-0.18,+0.89,"PLAYER");
 
     if (current_player==0)
-        textf(-0.0450,+0.89,(void *)font_1, " 1");
+        textf(-0.0450,+0.89, " 1");
     else if (current_player==1)
-        textf(-0.0450,+0.89,(void *)font_1, " 2");
+        textf(-0.0450,+0.89, " 2");
     else if (current_player==2)
-        textf(-0.0450,+0.89,(void *)font_1, " 3");
+        textf(-0.0450,+0.89, " 3");
     else if (current_player==3)
-        textf(-0.0450,+0.89,(void *)font_1, " 4");
+        textf(-0.0450,+0.89, " 4");
 
-    textf(+0.00,+0.89,(void *)font_1,"'S TURN");
+
+    textf(+0.00,+0.89,"'S TURN");
 
     glBegin(GL_LINE_STRIP);  //draws grid.
     float i,j;
@@ -506,7 +520,8 @@ void draw_grid(void)
         glVertex2f(i/10+0.2,j/10-0.2);
     }
     glEnd();
-    win();      //Call to check if someone has won.
+    win();     //Call to check if someone has won.
+
 }//end.
 
 //*******************************************************************************************************************************//
@@ -514,7 +529,7 @@ void draw_grid(void)
 //updates the angle of rotation of spheres/balls with time.
 void update(int value)
 {
-    angle+=3.0;
+    angle+=10.0;
     if(angle>360)
     {
         angle-=360;
@@ -539,7 +554,7 @@ void sphere_mainscreen(float x_1,float y_1,int i,int j)
         glTranslatef(-x_1,-y_1,0);
     }
 
-    if(i==2)  //draws two spheres as a combination.
+    else if(i==2)  //draws two spheres as a combination.
     {
         glRotatef(angle,x_1,y_1,0.0);
         glTranslatef(x_1-0.03, y_1, 0);
@@ -550,7 +565,7 @@ void sphere_mainscreen(float x_1,float y_1,int i,int j)
         glRotatef(-angle,x_1,y_1,0.0);
     }
 
-    if(i==3)  //draws three spheres as a combination.
+    else if(i==3)  //draws three spheres as a combination.
     {
         glRotatef(angle,x_1,y_1,0.0);
         glTranslatef(x_1, y_1+0.02, 0);
@@ -564,6 +579,19 @@ void sphere_mainscreen(float x_1,float y_1,int i,int j)
         glTranslatef(-x_1-0.03,-y_1+0.02,0);
         glRotatef(-angle,x_1,y_1,0.0);
     }
+    else {
+        glRotatef(angle,x_1,y_1,0.0);
+        glTranslatef(x_1, y_1+0.02, 0);
+        glutSolidSphere(0.03, 200, 300);
+
+        glTranslatef(-0.03,-0.04 , 0);
+        glutSolidSphere(0.03, 200, 300);
+        glTranslatef(+0.06, 0, 0);
+        glutSolidSphere(0.03, 200, 300);
+
+        glTranslatef(-x_1-0.03,-y_1+0.02,0);
+        glRotatef(-angle,x_1,y_1,0.0);
+    	}
 }
 
 //*******************************************************************************************************************************//
@@ -659,13 +687,12 @@ void mouse_click(int button,int state,int x,int y)
                     //if the cell where mouse is clicked has no balls or balls of the same player whose turn it is.
                     is_chance=true;
                     ball_count[i_1][j_1]++;
-
-                    ball_colour[i_1][j_1]=current_player;
+                    ball_colour[i_1][j_1]=current_player; 
                 }
                 else
                 {
                     is_chance=false;
-                };
+                }; 
                 rearrange();
                 glutPostRedisplay();
 
@@ -743,7 +770,7 @@ void mouse_click(int button,int state,int x,int y)
 //this check is performed repeatedly untill no new explosion is occuring after previous explosion.
 void   rearrange()
 {
-    while(true)
+   while(true)
     {
         int check=0;
         for(int i=0; i<8; i++)
@@ -794,7 +821,7 @@ void   rearrange()
             }
         }
         if (check==48) //stops checking for explosion and rearranging variables if each of the cells
-            break;     // have less no. of balls than max. no. of balls that corresponding cell can have.
+            break;     // have less no. of balls than max. no. of balls that corresponding cell can have. 
     }
     eliminate(); // Call to check if some player is eliminated.
 } //end.
@@ -808,7 +835,7 @@ void eliminate()
     int sum=0,i,j,a;
     for(i=0; i<8; i++)
     {
-        for(j=0; j<6; j=j++)
+        for(j=0; j<6; j++)
         {
             sum+=ball_count[i][j];
         }
@@ -866,18 +893,18 @@ void won_player()
 
     if (current_player==0) glColor3f(1.0,1.0,0.0);
     else glColor3f(int(current_player/4)%2, int(current_player/2)%2, current_player%2);
-    textf(-0.28,+0.89,(void *)font_2,"PLAYER");
+    textf1(-0.28,+0.89,"PLAYER");
 
     if (current_player==0)
-        textf(-0.0450,+0.89,(void *)font_2, " 1");
+        textf1(-0.0450,+0.89, " 1");
     else if (current_player==1)
-        textf(-0.0450,+0.89,(void *)font_2, " 2");
+        textf1(-0.0450,+0.89," 2");
     else if (current_player==2)
-        textf(-0.0450,+0.89,(void *)font_2, " 3");
+        textf1(-0.0450,+0.89," 3");
     else if (current_player==3)
-        textf(-0.0450,+0.89,(void *)font_2, " 4");
+        textf1(-0.0450,+0.89, " 4");
 
-    textf(+0.00,+0.89,(void *)font_2," HAS WON");
+    textf1(+0.00,+0.89," HAS WON");
     int k;
     for(k=-1; k<2; k++) //draws rectangle around text.
     {
@@ -903,8 +930,8 @@ void won_player()
     }
 
     glColor3d(0.0, 0.0, 0.0);
-    textf(-0.60125,-0.9125,(void *)font_1,"MAIN MENU");
-    textf(+0.455,-0.9125,(void *)font_1,"EXIT");
+    textf(-0.60125,-0.9125,"MAIN MENU");
+    textf(+0.455,-0.9125,"EXIT");
 
     if (current_player==0) glColor3f(1.0,1.0,0.0);
     else glColor3f(int(current_player/4)%2, int(current_player/2)%2, current_player%2);
